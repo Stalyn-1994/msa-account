@@ -114,6 +114,8 @@ public class AccountServiceImpl implements AccountService {
       accountRepository.delete(accountEntity);
       return ResponseEntity.noContent().build();
     }
+    accountEntity.setStatus(Boolean.FALSE);
+    accountRepository.save(accountEntity);
     throw new GenericException(HttpStatus.BAD_REQUEST, ACCOUNT_WITH_MOVEMENTS);
   }
 }
