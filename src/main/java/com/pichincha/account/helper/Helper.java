@@ -16,4 +16,11 @@ public class Helper {
         .data(data)
         .build(), httpStatus);
   }
+
+  public static ResponseEntity<BaseResponseDto<Object>> buildResponseDtoGeneric(String message, Integer code) {
+    return new ResponseEntity<>(BaseResponseDto.builder()
+        .code(code)
+        .status(message)
+        .build(), HttpStatus.OK);
+  }
 }

@@ -12,7 +12,7 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CustomerResponseLegacyDto {
+public class  CustomerResponseLegacyDto {
 
   String clientId;
   String name;

@@ -25,6 +25,9 @@ spring:
 #    locations: classpath:db/migration
 #    baseline-on-migrate: true
   # Propiedades del consumer
+account:
+  services:
+    url: http://localhost:8080/api/customer/
   kafka:
     consumer:
       bootstrap-servers: localhost:9092

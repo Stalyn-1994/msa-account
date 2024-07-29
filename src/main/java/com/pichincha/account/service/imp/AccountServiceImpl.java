@@ -12,6 +12,7 @@ import com.pichincha.account.domain.exception.GenericException;
 import com.pichincha.account.repository.AccountRepository;
 import com.pichincha.account.repository.CustomerRepository;
 import com.pichincha.account.service.AccountService;
+import com.pichincha.account.service.CustomerService;
 import com.pichincha.account.service.MovementService;
 import com.pichincha.account.service.dto.request.AccountRequestDto;
 import com.pichincha.account.service.dto.request.AccountRequestEditDto;
@@ -41,16 +42,15 @@ public class AccountServiceImpl implements AccountService {
 
   final MovementServiceMapper movementServiceMapper;
   final AccountServiceMapper accountServiceMapper;
-  final CustomerRepository customerRepository;
   final AccountRepository accountRepository;
+  final CustomerService customerService;
   final MovementService movementService;
   final ObjectMapper objectMapper;
 
   @Override
   public ResponseEntity<BaseResponseDto<AccountResponseDto>> save(AccountRequestDto accountRequestDto) {
     try {
-      CustomerResponseLegacyDto customerResponseLegacyDto = customerRepository
-          .getCustomerResponseLegacyDtoBaseResponseDto(accountRequestDto.getCustomerId()).getData();
+      CustomerResponseLegacyDto customerResponseLegacyDto = customerService.getCustomerResponseLegacyDtoBaseResponseDto(accountRequestDto.getCustomerId()).getData();
       AccountEntity account=accountServiceMapper.toAccountEntity(accountRequestDto, customerResponseLegacyDto);
       account.setMovements(List.of(movementServiceMapper.buildMoveEntity(accountRequestDto.getInitialBalance(), account)));
       String accountNumber = accountRepository.save(account).getAccountNumber();
@@ -69,7 +69,7 @@ public class AccountServiceImpl implements AccountService {
     AccountEntity accountEntity = accountRepository
         .findAccountEntitiesByAccountNumber(accountRequestDto.getAccountNumber())
         .orElseThrow(() -> new GenericException(HttpStatus.NOT_FOUND, NOT_FOUND));
-    CustomerResponseLegacyDto customerResponseLegacyDto = customerRepository
+    CustomerResponseLegacyDto customerResponseLegacyDto = customerService
         .getCustomerResponseLegacyDtoBaseResponseDto(accountRequestDto.getCustomerId()).getData();
     AccountEntity account=accountServiceMapper.toAccountEntityUpdated(accountRequestDto, customerResponseLegacyDto, accountEntity.getId());
     List<MovementsEntity>movementsEntities=movementServiceMapper.getMovementsUpdated(account.getAccountNumber(),accountRequestDto.getInitialBalance());
@@ -89,7 +89,7 @@ public class AccountServiceImpl implements AccountService {
     AccountRequestEditDto accountRequestDto=objectMapper.convertValue(accountFields, AccountRequestEditDto.class);
     CustomerResponseLegacyDto customerResponseLegacyDto=new CustomerResponseLegacyDto();
     if (!Objects.isNull(accountRequestDto.getCustomerId())) {
-      customerResponseLegacyDto= customerRepository.getCustomerResponseLegacyDtoBaseResponseDto(accountRequestDto.getCustomerId()).getData();
+      customerResponseLegacyDto= customerService.getCustomerResponseLegacyDtoBaseResponseDto(accountRequestDto.getCustomerId()).getData();
     }
     AccountEntity account=accountServiceMapper.editAccountFromAccountRequestDto(accountEntity,accountRequestDto,customerResponseLegacyDto);
     if (!Objects.isNull(accountRequestDto.getInitialBalance())){

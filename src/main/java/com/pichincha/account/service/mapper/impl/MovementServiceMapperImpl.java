@@ -1,4 +1,4 @@
-package com.pichincha.account.service.mapper;
+package com.pichincha.account.service.mapper.impl;
 
 
 import static com.pichincha.account.util.Constants.INSUFFICIENT_BALANCE;
@@ -10,6 +10,7 @@ import com.pichincha.account.helper.factory.AccountInterface;
 import com.pichincha.account.helper.factory.AccountMovementsEnum;
 import com.pichincha.account.repository.MovementRepository;
 import com.pichincha.account.service.dto.request.MovementRequestDto;
+import com.pichincha.account.service.mapper.MovementServiceMapper;
 import jakarta.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
