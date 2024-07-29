@@ -12,18 +12,16 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password:
-#    hikari:
-#      pool-name: Postgresql
-#      connectionTimeout: 120000
-#      validation-timeout: 50000
-#      idleTimeout: 300000
-#      maxLifetime: 600000
-#      minimum-idle: 3
-#      maximum-pool-size: 5
-#      leak-detection-threshold: 120000
-#  flyway:
-#    locations: classpath:db/migration
-#    baseline-on-migrate: true
+    hikari:
+      pool-name: MyHikariCP
+      connectionTimeout: 120000
+      validation-timeout: 50000
+      idleTimeout: 300000
+      maxLifetime: 600000
+      minimum-idle: 3
+      maximum-pool-size: 5
+      leak-detection-threshold: 120000
+
   # Propiedades del consumer
 account:
   services:
