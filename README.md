@@ -37,6 +37,9 @@ docker build -t mi-aplicacion:latest .
 
 docker run -d -p 8080:8080 mi-aplicacion:latest
 
+## Diagrama de Casos de Uso
+Incluye un diagrama de casos de uso que se llama usesCases.png
+
 ## Requisitos
 
 - Java 17 o superior
